@@ -1,0 +1,43 @@
+from sklearn.datasets import load_iris
+
+iris=load_iris()
+
+iris
+
+iris.data                                                             #checking data
+
+iris.target                                                           #checking target values
+
+iris.target_names                                                     #checking labels
+
+iris.feature_names                                                    #checking feature names
+
+x=iris.data                                                           #dependent and independent variables
+                                     
+y=iris.target   
+
+from sklearn.model_selection import train_test_split                 #split data into train and test part
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.30,random_state=4)
+x_train
+
+#using KNN Classifier
+
+from sklearn.neighbors import KNeighborsClassifier
+
+knn=KNeighborsClassifier(n_neighbors=3)
+
+knn.fit(x_train,y_train)                  #train KNN classifier
+
+y_pred=knn.predict(x_test)                #Evaluate model
+y_pred
+
+y_test
+
+#checking Accuracy
+
+from sklearn.metrics import accuracy_score
+accuracy_score(y_test,y_pred)
+
+
+
