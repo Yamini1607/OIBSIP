@@ -1,0 +1,58 @@
+#importing libraries
+
+import pandas as pd
+
+import numpy as np
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.linear_model import LinearRegression
+
+df=pd.read_csv("D:\Advertising.csv")                      #loading the dataset
+df.head()
+
+df.isna().sum()                                          #checking null values           #here data has no null values
+
+sns.heatmap(df.corr(),square=True)                        #drawing heatmap to know the correlation between the columns
+
+# Here Tv has a positive correlation with Sales.So we consider Tv as a feature(x) and Sales as a Predictor(y) for regression
+
+sns.lmplot(x='TV',y='Sales',data=df)                     #correlation between Tv and Sales
+
+#we have a strong correlation between Tv and Sales
+
+x=df[['TV']]                                             #creating features and target variables
+y=df.Sales          
+
+# creating and Training the model
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3,random_state=10)     
+
+model=LinearRegression()
+model.fit(x_train,y_train)
+
+print(model.coef_)                                      #predicting the model
+print(model.intercept_)
+
+#By using above two values we can calculate linear regression using y=mx+b formula
+
+model.predict([[40]])
+
+y_pred=model.predict(x_test)
+
+#comparing actual values and predcted values
+
+act_predict=pd.DataFrame({'Actual':y_test.values.flatten(),'predict':y_pred.flatten()})
+act_predict.head(5)
+
+#here the difference between actual and predicted values is not too far.
+
+act_predict.sample(10).plot(kind='bar')                  # plotting the model
+
+model.score(x_test,y_test)                               # model evaluation
+
+
+
+
+
